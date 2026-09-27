@@ -1,0 +1,40 @@
+{
+  "total_duration": 87.336,
+  "scenes": [
+    {
+      "id": "scene1_intro",
+      "text": "In modern smart factories and collaborative robotic spaces, autonomous mobile robots and humans share tight physical corridors. Traditional cloud computer vision is too slow for critical collision avoidance. Introducing AuraVision: an edge-native spatial awareness engine powered by OpenCV 5 and AWS IoT.",
+      "start": 0.0,
+      "end": 21.26,
+      "duration": 21.26
+    },
+    {
+      "id": "scene2_opencv_spatial",
+      "text": "AuraVision calculates dense optical flow vector fields at sixty frames per second directly on the edge. By projecting three-dimensional bounding frustums and kinematic velocity vectors, AuraVision continuously monitors the operational safety envelope in real time.",
+      "start": 21.26,
+      "end": 38.9,
+      "duration": 17.64
+    },
+    {
+      "id": "scene3_ttc_interception",
+      "text": "Here, when a worker enters the path of an automated guided vehicle, AuraVision computes the exact Time-To-Collision. As the trajectory crosses the lateral safety corridor with a sub-one-point-two second threshold, AuraVision instantly triggers an emergency braking interception.",
+      "start": 38.9,
+      "end": 56.09,
+      "duration": 17.18
+    },
+    {
+      "id": "scene4_aws_greengrass",
+      "text": "Simultaneously, AuraVision synchronizes high-priority hazard events to AWS IoT Greengrass with guaranteed Quality of Service over lightweight MQTT topics, ensuring full cloud observability without incurring high-latency round-trip bottlenecks.",
+      "start": 56.09,
+      "end": 72.79,
+      "duration": 16.7
+    },
+    {
+      "id": "scene5_cli_closing",
+      "text": "With full multi-entity swarm tracking and a deterministic terminal CLI, AuraVision delivers sub-four-millisecond spatial intelligence. Open source, robust, and engineered for next-generation physical AI safety.",
+      "start": 72.79,
+      "end": 87.34,
+      "duration": 14.54
+    }
+  ]
+}

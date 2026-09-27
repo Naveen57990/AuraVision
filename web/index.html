@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraVision — Edge Spatial Awareness & Physical AI Hazard Interception Engine</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="theme-spatial">
+  <!-- Header Bar -->
+  <header class="spatial-header">
+    <div class="header-left">
+      <div class="logo-mark">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+          <polyline points="2 17 12 22 22 17"/>
+          <polyline points="2 12 12 17 22 12"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">AURAVISION <span class="brand-sub">EDGE SPATIAL ENGINE</span></div>
+        <div class="brand-status"><span class="pulse-dot"></span> OPENCV 5 KINEMATICS &bull; AWS IOT GREENGRASS SYNC &bull; 60 FPS EDGE PIPELINE</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button id="radarViewToggle" class="spatial-btn">
+        <span>🔄 3D RADAR VIEW</span>
+      </button>
+      <button id="audioToggle" class="spatial-btn alert-audio-btn">
+        <span id="audioIcon">🔊 PROXIMITY ALARMS ON</span>
+      </button>
+      <button id="resetSimBtn" class="spatial-btn secondary">RESET SIM</button>
+    </div>
+  </header>
+
+  <main class="console-layout">
+    <!-- Left Column: 3D Spatial Canvas Viewport & Radar -->
+    <section class="viewport-panel">
+      <div class="panel-header">
+        <h2>REAL-TIME 3D SPATIAL SENSOR FUSION VIEWPORT</h2>
+        <div class="scenario-selector">
+          <label>SCENARIO PRESETS:</label>
+          <select id="scenarioPreset">
+            <option value="worker_hazard">1. Factory Worker Ingress (TTC &lt; 1.0s &bull; Emergency Brake)</option>
+            <option value="forklift_cross">2. Blind-Spot Autonomous Forklift Cross-Traffic</option>
+            <option value="multi_swarm">3. Multi-Entity Dense Fleet Cluster</option>
+            <option value="clear_corridor">4. Unobstructed High-Speed Safety Corridor</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Main Canvas for 3D Projection -->
+      <div class="canvas-container">
+        <canvas id="spatialCanvas" width="960" height="540"></canvas>
+        <div class="canvas-hud-overlay">
+          <div class="hud-item"><span class="hud-label">FOV:</span> 110° AZIMUTH</div>
+          <div class="hud-item"><span class="hud-label">RANGE:</span> 0.5m – 40m</div>
+          <div class="hud-item"><span class="hud-label">ENGINE:</span> OPENCV 5 OPTICAL FLOW</div>
+          <div class="hud-item"><span class="hud-label">LATENCY:</span> &lt; 4.2ms</div>
+        </div>
+      </div>
+
+      <!-- Interactive Controls for Kinematics -->
+      <div class="controls-card">
+        <div class="controls-title">INTERACTIVE TARGET KINEMATICS MODULATION</div>
+        <div class="sliders-grid">
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>LATERAL POSITION (X)</span>
+              <span id="val_posX" class="slider-val">0.1 m</span>
+            </div>
+            <input type="range" id="input_posX" min="-6.0" max="6.0" step="0.1" value="0.1" class="spatial-slider">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>DEPTH DISTANCE (Z)</span>
+              <span id="val_posZ" class="slider-val">4.5 m</span>
+            </div>
+            <input type="range" id="input_posZ" min="1.0" max="35.0" step="0.5" value="4.5" class="spatial-slider">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>APPROACHING VELOCITY (Vz)</span>
+              <span id="val_velZ" class="slider-val">-5.0 m/s</span>
+            </div>
+            <input type="range" id="input_velZ" min="-12.0" max="4.0" step="0.5" value="-5.0" class="spatial-slider">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>LATERAL VELOCITY (Vx)</span>
+              <span id="val_velX" class="slider-val">-0.2 m/s</span>
+            </div>
+            <input type="range" id="input_velX" min="-5.0" max="5.0" step="0.2" value="-0.2" class="spatial-slider">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Threat Interceptor & AWS IoT Edge Stream -->
+    <section class="telemetry-panel">
+      <!-- Main Status Banner -->
+      <div class="threat-status-banner critical" id="threatBanner">
+        <div class="threat-badge" id="threatBadge">CRITICAL THREAT &bull; EMERGENCY BRAKE ACTIVE</div>
+        <div class="threat-desc" id="threatDesc">Trajectory Intersects Safety Corridor (TTC: 0.90s &lt; 1.20s Threshold)</div>
+      </div>
+
+      <!-- Core Spatial Metrics Matrix -->
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-label">TIME-TO-COLLISION</div>
+          <div class="metric-score" id="metric_ttc">0.90<span class="sub-denom">s</span></div>
+          <div class="metric-interp" id="interp_ttc">Emergency Interception Required</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">CLOSING SPEED</div>
+          <div class="metric-score" id="metric_speed">5.00<span class="sub-denom">m/s</span></div>
+          <div class="metric-interp" id="interp_speed">18.0 km/h Head-On Vector</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">LATERAL OFFSET</div>
+          <div class="metric-score" id="metric_lateral">0.10<span class="sub-denom">m</span></div>
+          <div class="metric-interp" id="interp_lateral">Inside 1.5m Safety Zone</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">OPTICAL FLOW MAG</div>
+          <div class="metric-score" id="metric_flow">6.42<span class="sub-denom">px/f</span></div>
+          <div class="metric-interp">Dense Edge Motion Field</div>
+        </div>
+      </div>
+
+      <!-- AWS IoT Core Greengrass Edge Stream -->
+      <div class="aws-stream-card">
+        <div class="aws-stream-header">
+          <div class="aws-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            AWS IOT GREENGRASS EDGE DISPATCH STREAM
+          </div>
+          <div class="mqtt-topic" id="mqttTopic">auravision/edge/hazards/critical [QoS 1]</div>
+        </div>
+        <pre class="json-code-box" id="awsPayloadBox"></pre>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="panel-footer">
+        <button id="exportSafetyPassBtn" class="primary-action-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          EXPORT SPATIAL AUDIT &amp; TELEMETRY LOG
+        </button>
+        <button id="copyMqttBtn" class="secondary-action-btn">
+          COPY MQTT PAYLOAD
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
